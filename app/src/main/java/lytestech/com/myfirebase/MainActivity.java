@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void handleSignOut(){
         FirebaseAuth.getInstance().signOut();
+        Prefs.clear();
         updateUI();
     }
 
@@ -73,17 +74,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void populateVC(){
-        aq.id(R.id.userNameTextView).text("Alela");
+        aq.id(R.id.userNameTextView).text(Prefs.getString("user_name", DEFAULT_STRING));
+        aq.id(R.id.userEmailTextView).text(Prefs.getString("user_email", DEFAULT_STRING));
         String stringUrl = Prefs.getString("user_profile_pic", DEFAULT_STRING);
         if(stringUrl != DEFAULT_STRING){
             aq.id(R.id.userProfilePicImage).image(stringUrl);
-            try {
-                URL pictureUrl = new URL(stringUrl);
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-
         }
 
     }
